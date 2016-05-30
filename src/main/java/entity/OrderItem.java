@@ -1,3 +1,5 @@
+package entity;
+
 import org.hibernate.criterion.*;
 
 import javax.persistence.*;

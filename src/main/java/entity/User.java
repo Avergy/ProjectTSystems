@@ -5,17 +5,17 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by Siry on 30.05.2016.
+ * Created by Siry on 29.05.2016.
  */
 @Entity
-@Table(name = "employee")
-public class Employee implements Serializable {
+@Table(name = "user")
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(name = "login")
+    @Column(name = "Login")
     private String login;
 
     @Column(name = "FirstName")
@@ -25,18 +25,31 @@ public class Employee implements Serializable {
     private String SecondName;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "Bithday")
+    @Column(name = "Birthday")
     private Date birthday;
 
     @Column(name = "email")
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "Password")
     private String password;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_Position")
-    private PositionEmployee position;
+    @JoinColumn(name = "idRole")
+    private Position role;
+
+    public User() {
+    }
+
+    public User(String login, String firstName, String secondName, Date birthday, String email, String password, Position role) {
+        this.login = login;
+        FirstName = firstName;
+        SecondName = secondName;
+        this.birthday = birthday;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
 
     public int getId() {
         return id;
@@ -94,12 +107,12 @@ public class Employee implements Serializable {
         this.password = password;
     }
 
-    public PositionEmployee getPosition() {
-        return position;
+    public Position getRole() {
+        return role;
     }
 
-    public void setPosition(PositionEmployee position) {
-        this.position = position;
+    public void setRole(Position role) {
+        this.role = role;
     }
 
     @Override
@@ -107,16 +120,16 @@ public class Employee implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Employee employee = (Employee) o;
+        User user = (User) o;
 
-        if (id != employee.id) return false;
-        if (!login.equals(employee.login)) return false;
-        if (!FirstName.equals(employee.FirstName)) return false;
-        if (!SecondName.equals(employee.SecondName)) return false;
-        if (!birthday.equals(employee.birthday)) return false;
-        if (!email.equals(employee.email)) return false;
-        if (!password.equals(employee.password)) return false;
-        return position.equals(employee.position);
+        if (id != user.id) return false;
+        if (!login.equals(user.login)) return false;
+        if (!FirstName.equals(user.FirstName)) return false;
+        if (!SecondName.equals(user.SecondName)) return false;
+        if (!birthday.equals(user.birthday)) return false;
+        if (!email.equals(user.email)) return false;
+        if (!password.equals(user.password)) return false;
+        return role.equals(user.role);
 
     }
 
@@ -129,13 +142,13 @@ public class Employee implements Serializable {
         result = 31 * result + birthday.hashCode();
         result = 31 * result + email.hashCode();
         result = 31 * result + password.hashCode();
-        result = 31 * result + position.hashCode();
+        result = 31 * result + role.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return "Employee{" +
+        return "Client{" +
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", FirstName='" + FirstName + '\'' +
@@ -143,7 +156,7 @@ public class Employee implements Serializable {
                 ", birthday=" + birthday +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", position=" + position +
+                ", role=" + role +
                 '}';
     }
 }

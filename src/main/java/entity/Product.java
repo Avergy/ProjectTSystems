@@ -35,9 +35,6 @@ public class Product implements Serializable {
     @Column(name = "quantityStock")
     private int quantityStock;
 
-    @Column(name = "quantityOrder")
-    private int quantityOrder;
-
     public int getId() {
         return id;
     }
@@ -94,14 +91,6 @@ public class Product implements Serializable {
         this.quantityStock = quantityStock;
     }
 
-    public int getQuantityOrder() {
-        return quantityOrder;
-    }
-
-    public void setQuantityOrder(int quantityOrder) {
-        this.quantityOrder = quantityOrder;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -113,7 +102,6 @@ public class Product implements Serializable {
         if (price != product.price) return false;
         if (weight != product.weight) return false;
         if (quantityStock != product.quantityStock) return false;
-        if (quantityOrder != product.quantityOrder) return false;
         if (!name.equals(product.name)) return false;
         if (!categoryProduct.equals(product.categoryProduct)) return false;
         return color.equals(product.color);
@@ -129,7 +117,6 @@ public class Product implements Serializable {
         result = 31 * result + color.hashCode();
         result = 31 * result + weight;
         result = 31 * result + quantityStock;
-        result = 31 * result + quantityOrder;
         return result;
     }
 
@@ -143,7 +130,6 @@ public class Product implements Serializable {
                 ", color=" + color +
                 ", weight=" + weight +
                 ", quantityStock=" + quantityStock +
-                ", quantityOrder=" + quantityOrder +
                 '}';
     }
 }

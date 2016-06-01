@@ -7,15 +7,15 @@ import java.io.Serializable;
  * Created by Siry on 30.05.2016.
  */
 @Entity
-@Table(name = "sity")
-public class Sity implements Serializable {
+@Table(name = "role")
+public class Position implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(name = "sityName")
-    private String sity;
+    @Column(name = "role")
+    private String position;
 
     public int getId() {
         return id;
@@ -25,12 +25,12 @@ public class Sity implements Serializable {
         this.id = id;
     }
 
-    public String getSity() {
-        return sity;
+    public String getPosition() {
+        return position;
     }
 
-    public void setSity(String sity) {
-        this.sity = sity;
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     @Override
@@ -38,25 +38,25 @@ public class Sity implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Sity sity1 = (Sity) o;
+        Position role = (Position) o;
 
-        if (id != sity1.id) return false;
-        return sity.equals(sity1.sity);
+        if (id != role.id) return false;
+        return position.equals(role.position);
 
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + sity.hashCode();
+        result = 31 * result + position.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return "Sity{" +
+        return "PositionService{" +
                 "id=" + id +
-                ", sity='" + sity + '\'' +
+                ", position='" + position + '\'' +
                 '}';
     }
 }

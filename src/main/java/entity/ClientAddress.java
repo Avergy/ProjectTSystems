@@ -16,7 +16,7 @@ public class ClientAddress implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_Client")
-    private Client client;
+    private User user;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_PostalCode")
@@ -42,12 +42,12 @@ public class ClientAddress implements Serializable {
         this.id = id;
     }
 
-    public Client getClient() {
-        return client;
+    public User getUser() {
+        return user;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public PostalCode getPostalCode() {
@@ -90,7 +90,7 @@ public class ClientAddress implements Serializable {
         ClientAddress that = (ClientAddress) o;
 
         if (id != that.id) return false;
-        if (!client.equals(that.client)) return false;
+        if (!user.equals(that.user)) return false;
         if (!postalCode.equals(that.postalCode)) return false;
         if (!street.equals(that.street)) return false;
         if (!house.equals(that.house)) return false;
@@ -101,7 +101,7 @@ public class ClientAddress implements Serializable {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + client.hashCode();
+        result = 31 * result + user.hashCode();
         result = 31 * result + postalCode.hashCode();
         result = 31 * result + street.hashCode();
         result = 31 * result + house.hashCode();
@@ -113,7 +113,7 @@ public class ClientAddress implements Serializable {
     public String toString() {
         return "ClientAddress{" +
                 "id=" + id +
-                ", client=" + client +
+                ", role=" + user +
                 ", postalCode=" + postalCode +
                 ", street=" + street +
                 ", house=" + house +

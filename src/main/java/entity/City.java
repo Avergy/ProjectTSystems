@@ -7,15 +7,15 @@ import java.io.Serializable;
  * Created by Siry on 30.05.2016.
  */
 @Entity
-@Table(name = "positionemployee")
-public class PositionEmployee implements Serializable {
+@Table(name = "City")
+public class City implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "position")
-    private String position;
+    @Column(name = "cityName")
+    private String city;
 
     public int getId() {
         return id;
@@ -25,12 +25,12 @@ public class PositionEmployee implements Serializable {
         this.id = id;
     }
 
-    public String getPosition() {
-        return position;
+    public String getCity() {
+        return city;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     @Override
@@ -38,25 +38,25 @@ public class PositionEmployee implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PositionEmployee position1 = (PositionEmployee) o;
+        City city1 = (City) o;
 
-        if (id != position1.id) return false;
-        return position.equals(position1.position);
+        if (id != city1.id) return false;
+        return city.equals(city1.city);
 
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + position.hashCode();
+        result = 31 * result + city.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return "Position{" +
+        return "City{" +
                 "id=" + id +
-                ", position='" + position + '\'' +
+                ", city='" + city + '\'' +
                 '}';
     }
 }

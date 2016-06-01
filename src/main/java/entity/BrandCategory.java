@@ -16,11 +16,11 @@ public class BrandCategory implements Serializable {
     private int id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_Brand")
+    @JoinColumn(name = "idBrand")
     private Brand Brand;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_Category")
+    @JoinColumn(name = "idCategory")
     private CategoryProduct Category;
 
     public int getId() {

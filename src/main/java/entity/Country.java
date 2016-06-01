@@ -12,11 +12,18 @@ import java.io.Serializable;
 public class Country implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "CountryName")
     private String CountryName;
+
+    public Country() {
+    }
+
+    public Country(String countryName) {
+        CountryName = countryName;
+    }
 
     public int getId() {
         return id;

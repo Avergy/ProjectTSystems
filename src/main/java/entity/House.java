@@ -54,7 +54,7 @@ public class House implements Serializable {
 
     @Override
     public String toString() {
-        return "House{" +
+        return "HouseDao{" +
                 "id=" + id +
                 ", house='" + house + '\'' +
                 '}';

@@ -17,7 +17,7 @@ public class Order implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_Client")
-    private Client client;
+    private Position role;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_Address")
@@ -54,12 +54,12 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public Client getClient() {
-        return client;
+    public Position getRole() {
+        return role;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setRole(Position role) {
+        this.role = role;
     }
 
     public ClientAddress getClientAddress() {
@@ -127,7 +127,7 @@ public class Order implements Serializable {
 
         if (id != order.id) return false;
         if (cost != order.cost) return false;
-        if (!client.equals(order.client)) return false;
+        if (!role.equals(order.role)) return false;
         if (!clientAddress.equals(order.clientAddress)) return false;
         if (!payment.equals(order.payment)) return false;
         if (!delivery.equals(order.delivery)) return false;
@@ -140,7 +140,7 @@ public class Order implements Serializable {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + client.hashCode();
+        result = 31 * result + role.hashCode();
         result = 31 * result + clientAddress.hashCode();
         result = 31 * result + payment.hashCode();
         result = 31 * result + delivery.hashCode();
@@ -155,7 +155,7 @@ public class Order implements Serializable {
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", client=" + client +
+                ", role=" + role +
                 ", clientAddress=" + clientAddress +
                 ", payment=" + payment +
                 ", delivery=" + delivery +

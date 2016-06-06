@@ -7,7 +7,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="NewPersistenceUnit" value="0a6d99cd-1ef1-4506-ad1c-61bbcdb55814" />
-          <factory-entry name="ProjectJS" value="0a6d99cd-1ef1-4506-ad1c-61bbcdb55814" />
+          <factory-entry name="ProjectJS" value="f62fab72-7c28-4ab8-881e-1eb76496fc07" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
       </configuration>

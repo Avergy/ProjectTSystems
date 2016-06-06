@@ -25,6 +25,8 @@ public class UserServiceImpl implements UserService {
     public User addNewUser(User user) {
         if (loginInDB(user.getLogin())) return null;
         if (emailInDB(user.getEmail())) return null;
+        Role role = new RoleServiceImpl().readRole(1);
+        user.setRole(role);
         return (User) userDao.create(user);
     }
 

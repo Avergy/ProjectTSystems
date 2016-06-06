@@ -12,32 +12,32 @@ import java.util.Date;
 public class Order implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_Client")
-    private Position role;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "idUser")
+    private Role role;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_Address")
-    private ClientAddress clientAddress;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "idAddress")
+    private UserAddress userAddress;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_Payment")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "idPayment")
     private Payment payment;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_delivery")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "idDelivery")
     private Delivery delivery;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_StatusPayment")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "idStatusPayment")
     private StatusPayment statusPayment;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_StatusOrder")
-    private StatusDelivery statusDelivery;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "idStatusOrder")
+    private StatusOrder statusDelivery;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "Date")
@@ -46,28 +46,28 @@ public class Order implements Serializable {
     @Column(name = "Cost")
     private int cost;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Position getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(Position role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
-    public ClientAddress getClientAddress() {
-        return clientAddress;
+    public UserAddress getUserAddress() {
+        return userAddress;
     }
 
-    public void setClientAddress(ClientAddress clientAddress) {
-        this.clientAddress = clientAddress;
+    public void setUserAddress(UserAddress userAddress) {
+        this.userAddress = userAddress;
     }
 
     public Payment getPayment() {
@@ -94,11 +94,11 @@ public class Order implements Serializable {
         this.statusPayment = statusPayment;
     }
 
-    public StatusDelivery getStatusDelivery() {
+    public StatusOrder getStatusDelivery() {
         return statusDelivery;
     }
 
-    public void setStatusDelivery(StatusDelivery statusDelivery) {
+    public void setStatusDelivery(StatusOrder statusDelivery) {
         this.statusDelivery = statusDelivery;
     }
 
@@ -128,7 +128,7 @@ public class Order implements Serializable {
         if (id != order.id) return false;
         if (cost != order.cost) return false;
         if (!role.equals(order.role)) return false;
-        if (!clientAddress.equals(order.clientAddress)) return false;
+        if (!userAddress.equals(order.userAddress)) return false;
         if (!payment.equals(order.payment)) return false;
         if (!delivery.equals(order.delivery)) return false;
         if (!statusPayment.equals(order.statusPayment)) return false;
@@ -139,9 +139,9 @@ public class Order implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = (int) (id ^ (id >>> 32));
         result = 31 * result + role.hashCode();
-        result = 31 * result + clientAddress.hashCode();
+        result = 31 * result + userAddress.hashCode();
         result = 31 * result + payment.hashCode();
         result = 31 * result + delivery.hashCode();
         result = 31 * result + statusPayment.hashCode();
@@ -156,7 +156,7 @@ public class Order implements Serializable {
         return "Order{" +
                 "id=" + id +
                 ", role=" + role +
-                ", clientAddress=" + clientAddress +
+                ", userAddress=" + userAddress +
                 ", payment=" + payment +
                 ", delivery=" + delivery +
                 ", statusPayment=" + statusPayment +

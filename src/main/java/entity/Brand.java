@@ -11,26 +11,26 @@ import java.io.Serializable;
 public class Brand implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(name = "Brand")
-    private String Brand;
+    private String brand;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
     public String getBrand() {
-        return Brand;
+        return brand;
     }
 
     public void setBrand(String brand) {
-        Brand = brand;
+        brand = brand;
     }
 
     @Override
@@ -38,17 +38,17 @@ public class Brand implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Brand brand = (Brand) o;
+        Brand brand1 = (Brand) o;
 
-        if (id != brand.id) return false;
-        return Brand.equals(brand.Brand);
+        if (id != brand1.id) return false;
+        return brand.equals(brand1.brand);
 
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + Brand.hashCode();
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + brand.hashCode();
         return result;
     }
 
@@ -56,7 +56,7 @@ public class Brand implements Serializable {
     public String toString() {
         return "Brand{" +
                 "id=" + id +
-                ", Brand='" + Brand + '\'' +
+                ", brand='" + brand + '\'' +
                 '}';
     }
 }

@@ -12,17 +12,17 @@ import java.util.Date;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(name = "Login")
     private String login;
 
     @Column(name = "FirstName")
-    private String FirstName;
+    private String firstName;
 
     @Column(name = "SecondName")
-    private String SecondName;
+    private String secondName;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "Birthday")
@@ -34,28 +34,15 @@ public class User implements Serializable {
     @Column(name = "Password")
     private String password;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "idRole")
-    private Position role;
+    private Role role;
 
-    public User() {
-    }
-
-    public User(String login, String firstName, String secondName, Date birthday, String email, String password, Position role) {
-        this.login = login;
-        FirstName = firstName;
-        SecondName = secondName;
-        this.birthday = birthday;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
-
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -68,19 +55,19 @@ public class User implements Serializable {
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
-        FirstName = firstName;
+        this.firstName = firstName;
     }
 
     public String getSecondName() {
-        return SecondName;
+        return secondName;
     }
 
     public void setSecondName(String secondName) {
-        SecondName = secondName;
+        this.secondName = secondName;
     }
 
     public Date getBirthday() {
@@ -107,52 +94,21 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Position getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(Position role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        if (id != user.id) return false;
-        if (!login.equals(user.login)) return false;
-        if (!FirstName.equals(user.FirstName)) return false;
-        if (!SecondName.equals(user.SecondName)) return false;
-        if (!birthday.equals(user.birthday)) return false;
-        if (!email.equals(user.email)) return false;
-        if (!password.equals(user.password)) return false;
-        return role.equals(user.role);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + login.hashCode();
-        result = 31 * result + FirstName.hashCode();
-        result = 31 * result + SecondName.hashCode();
-        result = 31 * result + birthday.hashCode();
-        result = 31 * result + email.hashCode();
-        result = 31 * result + password.hashCode();
-        result = 31 * result + role.hashCode();
-        return result;
-    }
-
-    @Override
     public String toString() {
-        return "Client{" +
+        return "User{" +
                 "id=" + id +
                 ", login='" + login + '\'' +
-                ", FirstName='" + FirstName + '\'' +
-                ", SecondName='" + SecondName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", secondName='" + secondName + '\'' +
                 ", birthday=" + birthday +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +

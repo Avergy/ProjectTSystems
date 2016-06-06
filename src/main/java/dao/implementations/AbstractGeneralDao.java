@@ -2,12 +2,9 @@ package dao.implementations;
 
 
 import dao.interfaces.GeneralDao;
-import entity.Country;
 
 import javax.persistence.*;
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
-import java.util.Queue;
 
 /**
  * Created by Siry on 31.05.2016.
@@ -22,8 +19,9 @@ public abstract class AbstractGeneralDao<T> implements GeneralDao<T> {
     public AbstractGeneralDao(){
     }
 
-    public AbstractGeneralDao(Class clazz){
-        entityClass = clazz;
+
+    public void setEntityClass(Class entityClass) {
+        this.entityClass = entityClass;
     }
 
     public T create(T entity) {
@@ -55,7 +53,7 @@ public abstract class AbstractGeneralDao<T> implements GeneralDao<T> {
         return list;
     }
 
-    public T findById(int id) {
+    public T findById(long id) {
         entityManager.getTransaction().begin();
         T newT = (T) entityManager.find(entityClass, id);
         entityManager.getTransaction().commit();

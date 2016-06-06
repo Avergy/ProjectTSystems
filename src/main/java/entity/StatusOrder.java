@@ -6,17 +6,16 @@ import java.io.Serializable;
 /**
  * Created by Siry on 30.05.2016.
  */
-
 @Entity
-@Table(name = "color")
-public class Color implements Serializable {
+@Table(name = "statusorder")
+public class StatusOrder implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "Color")
-    private String color;
+    @Column(name = "statusorder")
+    private String statusOrder;
 
     public long getId() {
         return id;
@@ -26,12 +25,12 @@ public class Color implements Serializable {
         this.id = id;
     }
 
-    public String getColor() {
-        return color;
+    public String getStatusOrder() {
+        return statusOrder;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setStatusOrder(String statusOrder) {
+        this.statusOrder = statusOrder;
     }
 
     @Override
@@ -39,25 +38,25 @@ public class Color implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Color color1 = (Color) o;
+        StatusOrder that = (StatusOrder) o;
 
-        if (id != color1.id) return false;
-        return color.equals(color1.color);
+        if (id != that.id) return false;
+        return statusOrder.equals(that.statusOrder);
 
     }
 
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + color.hashCode();
+        result = 31 * result + statusOrder.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return "Color{" +
+        return "StatusOrder{" +
                 "id=" + id +
-                ", color='" + color + '\'' +
+                ", statusOrder='" + statusOrder + '\'' +
                 '}';
     }
 }

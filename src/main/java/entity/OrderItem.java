@@ -14,22 +14,22 @@ import java.io.Serializable;
 public class OrderItem implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_Order")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "idOrder")
     private Order order;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_Product")
-    private Product product;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "idPhone")
+    private Phone phone;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -41,12 +41,12 @@ public class OrderItem implements Serializable {
         this.order = order;
     }
 
-    public Product getProduct() {
-        return product;
+    public Phone getPhone() {
+        return phone;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setPhone(Phone phone) {
+        this.phone = phone;
     }
 
     @Override
@@ -58,15 +58,15 @@ public class OrderItem implements Serializable {
 
         if (id != orderItem.id) return false;
         if (!order.equals(orderItem.order)) return false;
-        return product.equals(orderItem.product);
+        return phone.equals(orderItem.phone);
 
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = (int) (id ^ (id >>> 32));
         result = 31 * result + order.hashCode();
-        result = 31 * result + product.hashCode();
+        result = 31 * result + phone.hashCode();
         return result;
     }
 
@@ -75,7 +75,7 @@ public class OrderItem implements Serializable {
         return "OrderItem{" +
                 "id=" + id +
                 ", order=" + order +
-                ", product=" + product +
+                ", phone=" + phone +
                 '}';
     }
 }

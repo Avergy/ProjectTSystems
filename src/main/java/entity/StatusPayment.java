@@ -11,26 +11,26 @@ import java.io.Serializable;
 public class StatusPayment implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(name = "StatusPayment")
-    private String statusPay;
+    private String statusPayment;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getStatusPay() {
-        return statusPay;
+    public String getStatusPayment() {
+        return statusPayment;
     }
 
-    public void setStatusPay(String statusPay) {
-        this.statusPay = statusPay;
+    public void setStatusPayment(String statusPayment) {
+        this.statusPayment = statusPayment;
     }
 
     @Override
@@ -41,14 +41,14 @@ public class StatusPayment implements Serializable {
         StatusPayment that = (StatusPayment) o;
 
         if (id != that.id) return false;
-        return statusPay.equals(that.statusPay);
+        return statusPayment.equals(that.statusPayment);
 
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + statusPay.hashCode();
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + statusPayment.hashCode();
         return result;
     }
 
@@ -56,7 +56,7 @@ public class StatusPayment implements Serializable {
     public String toString() {
         return "StatusPayment{" +
                 "id=" + id +
-                ", statusPay='" + statusPay + '\'' +
+                ", statusPayment='" + statusPayment + '\'' +
                 '}';
     }
 }

@@ -12,39 +12,39 @@ import java.io.Serializable;
 public class BrandCategory implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "idBrand")
-    private Brand Brand;
+    private Brand brand;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "idCategory")
-    private CategoryProduct Category;
+    private CategoryProduct category;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
     public Brand getBrand() {
-        return Brand;
+        return brand;
     }
 
     public void setBrand(Brand brand) {
-        Brand = brand;
+        this.brand = brand;
     }
 
     public CategoryProduct getCategory() {
-        return Category;
+        return category;
     }
 
     public void setCategory(CategoryProduct category) {
-        Category = category;
+        this.category = category;
     }
 
     @Override
@@ -55,16 +55,16 @@ public class BrandCategory implements Serializable {
         BrandCategory that = (BrandCategory) o;
 
         if (id != that.id) return false;
-        if (!Brand.equals(that.Brand)) return false;
-        return Category.equals(that.Category);
+        if (!brand.equals(that.brand)) return false;
+        return category.equals(that.category);
 
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + Brand.hashCode();
-        result = 31 * result + Category.hashCode();
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + brand.hashCode();
+        result = 31 * result + category.hashCode();
         return result;
     }
 
@@ -72,8 +72,8 @@ public class BrandCategory implements Serializable {
     public String toString() {
         return "BrandCategory{" +
                 "id=" + id +
-                ", Brand=" + Brand +
-                ", Category=" + Category +
+                ", brand=" + brand +
+                ", category=" + category +
                 '}';
     }
 }

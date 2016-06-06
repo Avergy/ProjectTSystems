@@ -5,6 +5,5 @@
 </head>
 <body>
 <h1>success reg</h1>
-<a href="login.jsp">Войти в систему</a>
 </body>
 </html>

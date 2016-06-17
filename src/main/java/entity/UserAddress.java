@@ -3,9 +3,6 @@ package entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * Created by Siry on 30.05.2016.
- */
 @Entity
 @Table(name = "useraddress")
 public class UserAddress implements Serializable {
@@ -18,7 +15,7 @@ public class UserAddress implements Serializable {
     @JoinColumn(name = "idUser")
     private User user;
 
-    @Column(name = "Address")
+    @Column(name = "Address", nullable = false)
     private String address;
 
     public long getId() {

@@ -3,9 +3,6 @@ package entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * Created by Siry on 30.05.2016.
- */
 @Entity
 @Table(name = "brand")
 public class Brand implements Serializable {
@@ -14,7 +11,7 @@ public class Brand implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "Brand")
+    @Column(name = "Brand", nullable = false)
     private String brand;
 
     public long getId() {
@@ -30,13 +27,13 @@ public class Brand implements Serializable {
     }
 
     public void setBrand(String brand) {
-        brand = brand;
+        this.brand = brand;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || !(o instanceof Brand)) return false;
 
         Brand brand1 = (Brand) o;
 

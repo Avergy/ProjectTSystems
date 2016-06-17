@@ -3,9 +3,6 @@ package entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * Created by Siry on 30.05.2016.
- */
 @Entity
 @Table(name = "role")
 public class Role implements Serializable {
@@ -14,7 +11,7 @@ public class Role implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "role")
+    @Column(name = "role", nullable = false)
     private String role;
 
     public long getId() {

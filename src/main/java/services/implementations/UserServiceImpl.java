@@ -6,9 +6,7 @@ import entity.Role;
 import entity.User;
 import services.interfaces.UserService;
 
-/**
- * Created by Siry on 03.06.2016.
- */
+
 public class UserServiceImpl implements UserService {
 
     private UserDao userDao = new UserDaoImpl();
@@ -22,20 +20,20 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public User addNewUser(User user) {
-        if (loginInDB(user.getLogin())) return null;
-        if (emailInDB(user.getEmail())) return null;
-        Role role = new RoleServiceImpl().readRole(1);
-        user.setRole(role);
-        return (User) userDao.create(user);
+    public void addNewUser(User user) {
+        //if (loginInDB(user.getLogin())) return null;
+        //if (emailInDB(user.getEmail())) return null;
+        //Role role = new RoleServiceImpl().readRole(1);
+        //user.setRole(role);
+        userDao.create(user);
     }
 
     public User readUser(long id) {
         return (User) userDao.findById(id);
     }
 
-    public void updateUser(User user) {
-        userDao.merge(user);
+    public User updateUser(User user) {
+        return (User) userDao.merge(user);
     }
 
     public void deleteUser(long id) {
@@ -49,14 +47,14 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public boolean checkLoginForm(String login, String password) {
-        if (login == "") return false;
-        if (password == "") return false;
+    public User checkLoginForm(String login, String password) {
+        if (login == "") return null;
+        if (password == "") return null;
         User user = userDao.findByLogin(login);
         if (user != null)
             if (user.getPassword().equals(password))
-                return true;
-        return false;
+                return user;
+        return null;
     }
 
     public boolean emailInDB(String email) {

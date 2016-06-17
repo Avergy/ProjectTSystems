@@ -2,37 +2,40 @@ package entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Arrays;
 
-/**
- * Created by Siry on 30.05.2016.
- */
+
 @Entity
-@Table(name = "phone")
+@Table(name = "phones")
 public class Phone implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "price")
-    private int price;
+    @Column(name = "price", nullable = false)
+    private long price;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "idCategoryBrand")
-    private CategoryProduct categoryProduct;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "idBrand", nullable = false)
+    private Brand brand;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "idColor")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "idColor", nullable = false)
     private Color color;
 
-    @Column(name = "weight")
+    @Column(name = "weight", nullable = false)
     private int weight;
 
-    @Column(name = "quantityStock")
+    @Column(name = "quantityStock", nullable = false)
     private int quantityStock;
+
+    @Column(name = "image", length = 1048576)
+    @Lob()
+    private byte[] image;
 
     public long getId() {
         return id;
@@ -50,20 +53,20 @@ public class Phone implements Serializable {
         this.name = name;
     }
 
-    public int getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
-    public CategoryProduct getCategoryProduct() {
-        return categoryProduct;
+    public Brand getBrand() {
+        return brand;
     }
 
-    public void setCategoryProduct(CategoryProduct categoryProduct) {
-        this.categoryProduct = categoryProduct;
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 
     public Color getColor() {
@@ -90,6 +93,14 @@ public class Phone implements Serializable {
         this.quantityStock = quantityStock;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -100,10 +111,9 @@ public class Phone implements Serializable {
         if (id != phone.id) return false;
         if (price != phone.price) return false;
         if (weight != phone.weight) return false;
-        if (quantityStock != phone.quantityStock) return false;
         if (!name.equals(phone.name)) return false;
-        if (!categoryProduct.equals(phone.categoryProduct)) return false;
-        return color.equals(phone.color);
+        if (!brand.equals(phone.brand)) return false;
+        return color != null ? color.equals(phone.color) : phone.color == null;
 
     }
 
@@ -111,11 +121,10 @@ public class Phone implements Serializable {
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + name.hashCode();
-        result = 31 * result + price;
-        result = 31 * result + categoryProduct.hashCode();
-        result = 31 * result + color.hashCode();
+        result = 31 * result + (int) (price ^ (price >>> 32));
+        result = 31 * result + brand.hashCode();
+        result = 31 * result + (color != null ? color.hashCode() : 0);
         result = 31 * result + weight;
-        result = 31 * result + quantityStock;
         return result;
     }
 
@@ -125,10 +134,11 @@ public class Phone implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
-                ", categoryProduct=" + categoryProduct +
+                ", brand=" + brand +
                 ", color=" + color +
                 ", weight=" + weight +
                 ", quantityStock=" + quantityStock +
+                ", image=" + Arrays.toString(image) +
                 '}';
     }
 }

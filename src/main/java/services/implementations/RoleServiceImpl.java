@@ -5,9 +5,7 @@ import dao.interfaces.RoleDao;
 import entity.Role;
 import services.interfaces.RoleService;
 
-/**
- * Created by Siry on 05.06.2016.
- */
+
 public class RoleServiceImpl implements RoleService {
 
     private RoleDao roleDao = new RoleDaoImpl();

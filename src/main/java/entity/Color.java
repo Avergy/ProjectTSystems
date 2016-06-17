@@ -3,10 +3,6 @@ package entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * Created by Siry on 30.05.2016.
- */
-
 @Entity
 @Table(name = "color")
 public class Color implements Serializable {
@@ -15,7 +11,7 @@ public class Color implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "Color")
+    @Column(name = "Color", nullable = false)
     private String color;
 
     public long getId() {

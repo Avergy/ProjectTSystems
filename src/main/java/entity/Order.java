@@ -1,14 +1,17 @@
 package entity;
 
+
+import enums.Delivery;
+import enums.Payment;
+import enums.StatusOrder;
+import enums.StatusPayment;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by Siry on 30.05.2016.
- */
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class Order implements Serializable {
 
     @Id
@@ -17,34 +20,34 @@ public class Order implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "idUser")
-    private Role role;
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "idAddress")
+    @JoinColumn(name = "idAddress", nullable = false)
     private UserAddress userAddress;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "idPayment")
+    @Column(name = "Payment", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Payment payment;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "idDelivery")
+    @Column(name = "Delivery", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Delivery delivery;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "idStatusPayment")
+    @Column(name = "StatusPayment", nullable = false)
+    @Enumerated(EnumType.STRING)
     private StatusPayment statusPayment;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "idStatusOrder")
+   @Column(name = "StatusOrder", nullable = false)
+   @Enumerated(EnumType.STRING)
     private StatusOrder statusDelivery;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "Date")
+    @Column(name = "Date", nullable = false)
     private Date date;
 
-    @Column(name = "Cost")
-    private int cost;
+    @Column(name = "Cost", nullable = false)
+    private long cost;
 
     public long getId() {
         return id;
@@ -54,12 +57,12 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public Role getRole() {
-        return role;
+    public User getUser() {
+        return user;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public UserAddress getUserAddress() {
@@ -110,11 +113,11 @@ public class Order implements Serializable {
         this.date = date;
     }
 
-    public int getCost() {
+    public long getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(long cost) {
         this.cost = cost;
     }
 
@@ -127,27 +130,27 @@ public class Order implements Serializable {
 
         if (id != order.id) return false;
         if (cost != order.cost) return false;
-        if (!role.equals(order.role)) return false;
-        if (!userAddress.equals(order.userAddress)) return false;
-        if (!payment.equals(order.payment)) return false;
-        if (!delivery.equals(order.delivery)) return false;
-        if (!statusPayment.equals(order.statusPayment)) return false;
-        if (!statusDelivery.equals(order.statusDelivery)) return false;
-        return date.equals(order.date);
+        if (user != null ? !user.equals(order.user) : order.user != null) return false;
+        if (userAddress != null ? !userAddress.equals(order.userAddress) : order.userAddress != null) return false;
+        if (payment != order.payment) return false;
+        if (delivery != order.delivery) return false;
+        if (statusPayment != order.statusPayment) return false;
+        if (statusDelivery != order.statusDelivery) return false;
+        return date != null ? date.equals(order.date) : order.date == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + role.hashCode();
-        result = 31 * result + userAddress.hashCode();
-        result = 31 * result + payment.hashCode();
-        result = 31 * result + delivery.hashCode();
-        result = 31 * result + statusPayment.hashCode();
-        result = 31 * result + statusDelivery.hashCode();
-        result = 31 * result + date.hashCode();
-        result = 31 * result + cost;
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (userAddress != null ? userAddress.hashCode() : 0);
+        result = 31 * result + (payment != null ? payment.hashCode() : 0);
+        result = 31 * result + (delivery != null ? delivery.hashCode() : 0);
+        result = 31 * result + (statusPayment != null ? statusPayment.hashCode() : 0);
+        result = 31 * result + (statusDelivery != null ? statusDelivery.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (int) (cost ^ (cost >>> 32));
         return result;
     }
 
@@ -155,7 +158,7 @@ public class Order implements Serializable {
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", role=" + role +
+                ", user=" + user +
                 ", userAddress=" + userAddress +
                 ", payment=" + payment +
                 ", delivery=" + delivery +

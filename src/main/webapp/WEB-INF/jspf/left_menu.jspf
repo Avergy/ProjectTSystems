@@ -1,0 +1,14 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<div id="indexLeftColumn">
+    <jsp:useBean id="brandService" class="services.implementations.BrandServiceImpl" scope="application"/>
+    <div class="menu_item">
+        <a href="/phoneList?all">All phones</a>
+    </div>
+    <c:forEach var ="brand" items="${brandService.loadAllBrands()}">
+        <div class="menu_item">
+            <a  href="/phoneList?${brand.getBrand()}">${brand.getBrand()}</a>
+        </div>
+    </c:forEach>
+</div>

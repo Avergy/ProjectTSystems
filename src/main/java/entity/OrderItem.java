@@ -1,14 +1,8 @@
 package entity;
 
-import org.hibernate.criterion.*;
-
 import javax.persistence.*;
-import javax.xml.ws.WebServiceClient;
 import java.io.Serializable;
 
-/**
- * Created by Siry on 30.05.2016.
- */
 @Entity
 @Table(name = "orderitems")
 public class OrderItem implements Serializable {
@@ -18,12 +12,15 @@ public class OrderItem implements Serializable {
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "idOrder")
+    @JoinColumn(name = "idOrder", nullable = false)
     private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "idPhone")
+    @JoinColumn(name = "idPhone", nullable = false)
     private Phone phone;
+
+    @Column(name = "quantity")
+    private int quantity;
 
     public long getId() {
         return id;
@@ -47,6 +44,14 @@ public class OrderItem implements Serializable {
 
     public void setPhone(Phone phone) {
         this.phone = phone;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     @Override
@@ -76,6 +81,7 @@ public class OrderItem implements Serializable {
                 "id=" + id +
                 ", order=" + order +
                 ", phone=" + phone +
+                ", quantity=" + quantity +
                 '}';
     }
 }

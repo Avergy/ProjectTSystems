@@ -4,9 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by Siry on 29.05.2016.
- */
+
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
@@ -15,28 +13,47 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "Login")
+    @Column(name = "Login", nullable = false)
     private String login;
 
-    @Column(name = "FirstName")
+    @Column(name = "FirstName", nullable = false)
     private String firstName;
 
-    @Column(name = "SecondName")
+    @Column(name = "SecondName", nullable = false)
     private String secondName;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "Birthday")
+    @Column(name = "Birthday", nullable = false)
     private Date birthday;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "Password")
+    @Column(name = "Password", nullable = false)
     private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "idRole")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "idRole", nullable = false)
     private Role role;
+
+    @Column(name = "avatar", length = 1048576)
+    @Lob()
+    private byte[] avatar;
+
+    public User() {
+    }
+
+    public User(String login) {
+        this.login = login;
+    }
+
+    public byte[] getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
+    }
 
     public long getId() {
         return id;

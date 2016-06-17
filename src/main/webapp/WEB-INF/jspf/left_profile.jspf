@@ -1,0 +1,31 @@
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<div id="indexLeftColumn">
+    <div class="menu_item">
+        <a href="/phoneList?all">Catalog phones</a>
+    </div>
+    <div class="menu_item">
+        <a href="/profile">Change Account Settings</a>
+    </div>
+    <%
+    if (user.getRole().getRole().equalsIgnoreCase("admin")) {
+    %>
+    <div class="menu_item">
+        <a href="/ordersList?all">Orders</a>
+    </div>
+
+    <div class="menu_item">
+        <a href="/newPhone">Add phone</a>
+    </div>
+    <%
+        }
+    %>
+    <div class="menu_item">
+        <a href="/ordersList?<%=user.getId()%>">My orders</a>
+    </div>
+    <div class="menu_item">
+        <a href="/myAddressList?<%=user.getId()%>">My address</a>
+    </div>
+
+</div>

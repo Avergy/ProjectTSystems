@@ -1,0 +1,152 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 850px;
+    text-align: center;
+    margin: 0px auto;
+}
+
+a{
+    color:#000000;
+    text-decoration:none;
+}
+
+#header {
+    height: 120px;
+}
+#logo {
+    height: 55px;
+    width: 55px;
+    float: left;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+
+
+#navigator_line{
+    height: 20px;
+    text-align: right;
+    background: #6495ED;
+}
+
+.navigator_item{
+    padding-right: 27px;
+}
+.link_navigator_item{
+    padding-top: 15px;
+    color: #F5F5F5;
+}
+#indexLeftColumn {
+    padding-top: 20px;
+    width: 200px;
+    float: left;
+}
+
+#indexRightColumn {
+    padding-top: 20px;
+    width: 650px;
+    float: left;
+}
+
+.phone_list h3 {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+.phone_title p {
+    color: #378de5;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 0;
+    margin: 0;
+}
+
+.phone_title {
+    height: 50px;
+    float: left;
+}
+
+.phone_info {
+    width: 210px;
+    height: 450px;
+    font-size: 12px;
+    float: left;
+    margin: 15px;
+}
+
+.phone_image {
+    height: 260px;
+    float: left;
+}
+
+.phone_details {
+    float: left;
+    margin-top: 10px;
+}
+
+.phone_image_item {
+    height: 260px;
+    float: left;
+}
+
+.phone_details_item {
+    float: left;
+    margin-top: 10px;
+}
+
+.menu_item{
+    border-style:solid;
+    border-color:#DCDCDC;
+    margin-top:30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.form_box {
+    margin-top: 40px;
+    margin-left: 250px;
+}
+.form_box label {
+    text-align:left;
+    font-size: 15px;
+    font-weight: bold;
+    color: #444444;
+    display: block;
+}
+.form_box input {
+    display: block;
+    border: 2px solid #cfcfcf;
+    font-size: 14px;
+    color: #444444;
+    padding: 7px 7px 8px;
+    width: 250px;
+    margin-bottom: 20px;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+}
+.form_box input:focus {
+    outline: none;
+    border-color: #008080;
+}
+.form_box .btn {
+    border: none;
+    width: 180px;
+    text-align: center;
+    background: #003399;
+    font-size: 13px;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+    height: 35px;
+    line-height: 28px;
+    padding: 0;
+}
+.cover{
+    height: 250px;
+    width: 190px;
+    }
+.info{
+    padding-top: 50px;
+}

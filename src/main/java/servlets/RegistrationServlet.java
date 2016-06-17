@@ -19,7 +19,7 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("registration.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/registration.jsp").forward(req, resp);
     }
 
     @Override
@@ -38,14 +38,15 @@ public class RegistrationServlet extends HttpServlet {
             newUser.setEmail(req.getParameter("email"));
             newUser.setPassword(req.getParameter("password"));
             UserService userService = new UserServiceImpl();
-            newUser = userService.addNewUser(newUser);
+            userService.addNewUser(newUser);
+            //newUser =
             if (newUser != null)
             {
-                resp.sendRedirect("successRegistration.jsp");
+                resp.sendRedirect("index.jsp");
             }
             else
             {
-                resp.sendRedirect("errorRegistration.htm");
+                resp.sendRedirect("registration.jsp");
             }
         } else if (req.getParameter("log_in") != null){
             resp.sendRedirect("login.jsp");

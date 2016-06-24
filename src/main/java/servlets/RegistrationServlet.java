@@ -1,9 +1,6 @@
 package servlets;
 
 import entity.User;
-import services.implementations.UserServiceImpl;
-import services.interfaces.UserService;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,9 +9,6 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-/**
- * Created by Siry on 05.06.2016.
- */
 public class RegistrationServlet extends HttpServlet {
 
     @Override
@@ -37,9 +31,6 @@ public class RegistrationServlet extends HttpServlet {
             newUser.setBirthday(date.getTime());
             newUser.setEmail(req.getParameter("email"));
             newUser.setPassword(req.getParameter("password"));
-            UserService userService = new UserServiceImpl();
-            userService.addNewUser(newUser);
-            //newUser =
             if (newUser != null)
             {
                 resp.sendRedirect("index.jsp");

@@ -1,5 +1,6 @@
-
+<%@ page import="Util.SetUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="userService" class="services.implementations.UserServiceImpl" scope="page"/>
 
 <div id="indexLeftColumn">
     <div class="menu_item">
@@ -9,23 +10,36 @@
         <a href="/profile">Change Account Settings</a>
     </div>
     <%
-    if (user.getRole().getRole().equalsIgnoreCase("admin")) {
+        if (request.getUserPrincipal().getName().toString() != null) {
+            String login = request.getUserPrincipal().getName().toString();
+            SetUtil.setUserByLogin(login, request);
+        }
+        user = (User) session.getAttribute("user");
+    if (request.isUserInRole("Admin")) {
     %>
     <div class="menu_item">
         <a href="/ordersList?all">Orders</a>
     </div>
 
     <div class="menu_item">
-        <a href="/newPhone">Add phone</a>
+        <a href="/admin/newPhone.jsp">Add phone</a>
+    </div>
+
+    <div class="menu_item">
+        <a href="/admin/modifyBrand.jsp">Edit brands list</a>
+    </div>
+
+    <div class="menu_item">
+        <a href="/admin/statistics.jsp">Statistics</a>
     </div>
     <%
         }
     %>
     <div class="menu_item">
-        <a href="/ordersList?<%=user.getId()%>">My orders</a>
+        <a href="/ordersList?my">My orders</a>
     </div>
     <div class="menu_item">
-        <a href="/myAddressList?<%=user.getId()%>">My address</a>
+        <a href="/myAddressList?my">My address</a>
     </div>
 
 </div>

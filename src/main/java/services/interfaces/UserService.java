@@ -1,20 +1,28 @@
 package services.interfaces;
 
+import entity.Order;
+import entity.Phone;
 import entity.User;
+import exceptions.NotFoundInDBException;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 
 public interface UserService {
 
-    void addNewUser(User user);
+    void updateUser(User user);
 
-    User readUser(long id);
+    User findByLogin(String login) throws NotFoundInDBException;
 
-    User updateUser(User user);
+    User findById(long id);
 
-    void deleteUser(long id);
 
-    User checkLoginForm(String login, String password);
+    Map<Phone, Integer> getTopTenPhones();
 
-    boolean emailInDB(String email);
+    Map<User, Long> getTopTenUsers();
+
+    List<Order> getOrdersPerPeriod(Date periodStart, Date periodEnd);
 
 }

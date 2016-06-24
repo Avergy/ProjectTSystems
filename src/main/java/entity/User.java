@@ -3,6 +3,7 @@ package entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -40,6 +41,12 @@ public class User implements Serializable {
     @Lob()
     private byte[] avatar;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.DETACH)
+    private List<Order> orders;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserAddress> addresses;
+
     public User() {
     }
 
@@ -53,6 +60,22 @@ public class User implements Serializable {
 
     public void setAvatar(byte[] avatar) {
         this.avatar = avatar;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public List<UserAddress> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<UserAddress> addresses) {
+        this.addresses = addresses;
     }
 
     public long getId() {

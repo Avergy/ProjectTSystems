@@ -18,30 +18,42 @@
             </div>
 
             <div class="phone_image">
-                <a href=""><img src="${request.getContextPath()}/ShowImage?index=<%=phones.indexOf(phone)%>"
+                <% String URL = phone.getImageURL();
+                    if (URL == null)
+                        URL = "standart_phone_img.png";
+
+                %>
+                <a href=""><img src="/images/<%=URL%>"
                                 alt="PhoneImage" class="cover"/></a>
+
             </div>
 
             <div class="phone_details">
                 <br><strong>Brand:</strong> <%=phone.getBrand().getBrand()%>
+                <br><strong>Color:</strong> <%=phone.getColor().getColor()%>
                 <br><strong>Price:</strong> <%=phone.getPrice()/100.0%> <strong> rub </strong>
-                <% if (session.getAttribute("role").equals("Admin")) {%>
+
+                <% if (request.isUserInRole("Admin")) {%>
 
                 <div>
-                    <a href="editPhone.jsp?<%=phone.getId()%>">Edit</a>
+                    <a href="/editPhone?<%=phone.getId()%>">Edit</a>
                 </div>
 
-                <% } %>
+                <% }
+                    if (phone.getQuantityStock() > 0)
+                    {
+                %>
 
                 <div>
-                    <a href="/addToCart?<%=phone.getId()%>">Add to cart</a></p>
+
+                     <a href="/addToCart?<%=phone.getId()%>" onclick="updateCart()">Add to cart</a></p>
                 </div>
 
             </div>
 
         </div>
     <%
-        }
+        }}
     %>
 
 </div>

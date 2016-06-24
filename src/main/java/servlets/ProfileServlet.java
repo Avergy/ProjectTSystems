@@ -1,10 +1,10 @@
 package servlets;
 
+import Util.ServicesUtil;
 import entity.User;
 import services.implementations.UserServiceImpl;
 import services.interfaces.UserService;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +19,7 @@ public class ProfileServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/profile.jsp").forward(req, resp);
+        req.getRequestDispatcher("/user/profile.jsp").forward(req, resp);
     }
 
     @Override
@@ -54,16 +54,11 @@ public class ProfileServlet extends HttpServlet {
             if (!newPassword.equals(""))
                 user.setPassword(newPassword);
             UserService userService = new UserServiceImpl();
-            user = userService.updateUser(user);
-
+            userService.updateUser(user);
+            user = ServicesUtil.getUserService().findById(user.getId());
             if (user != null)
                 session.setAttribute("user", user);
             resp.sendRedirect("/profile");
-        } else if ((req.getParameter("delete_profile") != null) &&
-                (user.getPassword().equals(req.getParameter("password")))){
-            UserService userService = new UserServiceImpl();
-            userService.deleteUser(user.getId());
-            resp.sendRedirect("login.jsp");
         } else if (req.getParameter("log_out") != null){
             session.setAttribute("user", null);
             resp.sendRedirect("/login");

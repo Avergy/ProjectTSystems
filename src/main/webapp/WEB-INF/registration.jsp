@@ -5,7 +5,7 @@
 
 <div id="indexRightColumn">
 <form action="/registration" method="post">
-    <div class="ащкь_box">
+    <div class="form_box">
 
             <label for="login">Login:</label>
             <input type="text" name="login" id="login" />
@@ -20,8 +20,7 @@
             <label for="birthday">Birthday:</label>
             <input type="date" name="birthday" id="birthday" />
 
-            <input type="submit" name="register" value="Register" class="btn"/>
-            <input type="submit" name="log_in" value="Log in" class="btn"/>
+            <input type="submit" name="register" value="Join" class="btn"/>>
 
         </div>
     </form>

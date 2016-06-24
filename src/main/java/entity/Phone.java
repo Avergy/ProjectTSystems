@@ -19,11 +19,11 @@ public class Phone implements Serializable {
     @Column(name = "price", nullable = false)
     private long price;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH})
     @JoinColumn(name = "idBrand", nullable = false)
     private Brand brand;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH})
     @JoinColumn(name = "idColor", nullable = false)
     private Color color;
 
@@ -36,6 +36,16 @@ public class Phone implements Serializable {
     @Column(name = "image", length = 1048576)
     @Lob()
     private byte[] image;
+
+    private String imageURL;
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
 
     public long getId() {
         return id;

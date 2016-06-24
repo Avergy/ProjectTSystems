@@ -1,11 +1,10 @@
 package dao.interfaces;
 
 import entity.User;
+import exceptions.NotFoundInDBException;
 
 public interface UserDao extends GenericDao {
 
-    User findByLogin(String login);
-
-    User findByEmail(String email);
+    User findByLogin(String login) throws NotFoundInDBException;
 
 }

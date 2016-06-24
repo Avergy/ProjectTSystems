@@ -36,6 +36,11 @@ a{
     padding-top: 15px;
     color: #F5F5F5;
 }
+
+.navigator_item_count {
+    padding-right: 4px;
+    color: #F5F5F5
+}
 #indexLeftColumn {
     padding-top: 20px;
     width: 200px;
@@ -46,6 +51,7 @@ a{
     padding-top: 20px;
     width: 650px;
     float: left;
+    text-align:left;
 }
 
 .phone_list h3 {
@@ -77,6 +83,7 @@ a{
 
 .phone_image {
     height: 260px;
+    width: 260px;
     float: left;
 }
 
@@ -144,9 +151,20 @@ a{
     padding: 0;
 }
 .cover{
-    height: 250px;
-    width: 190px;
+    max-width: 260px;
+    max-height: 260px;
     }
 .info{
     padding-top: 50px;
+}
+
+#cart{
+    max-width: 15px;
+    max-height: 15px;
+}
+
+
+#edit_img{
+    max-width: 30px;
+    max-height: 30px;
 }

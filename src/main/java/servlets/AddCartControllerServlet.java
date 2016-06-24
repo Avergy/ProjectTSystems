@@ -28,39 +28,43 @@ public class AddCartControllerServlet extends HttpServlet {
         User user = (User) session.getAttribute("user");
 
         if (userPath.equals("/addToCart")) {
-            PhoneService phoneService = new PhoneServiceImpl();
             ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-            if (cart == null)
+            PhoneService phoneService = new PhoneServiceImpl();
+            if (cart == null) {
                 cart = new ShoppingCart();
+                cart.setUser(user);
+                CartServlet.fillFromCookies(req, cart);
+                session.setAttribute("cart", cart);
+            }
             String idString = req.getQueryString();
-            if (idString != null)
-            {
+            if (idString != null) {
                 long id = Long.parseLong(idString);
                 Phone phone = phoneService.loadPhone(id);
+                int quantity = 1;
                 List<OrderItem> orderItems = cart.getOrderItems();
                 boolean isPhoneInCart = false;
-                for (OrderItem orderItem: orderItems)
-                {
-                    if(orderItem.getPhone().equals(phone))
-                    {
-                        int i = orderItem.getQuantity();
-                        i++;
-                        orderItem.setQuantity(i);
+                for (OrderItem orderItem: orderItems) {
+                    if (orderItem.getPhone().equals(phone)) {
+                        quantity += orderItem.getQuantity();
+                        orderItem.setQuantity(quantity);
                         isPhoneInCart = true;
+                        break;
                     }
 
                 }
-                if (!isPhoneInCart)
-                {
+                if (!isPhoneInCart) {
                     OrderItem orderItem = new OrderItem();
                     orderItem.setPhone(phone);
-                    orderItem.setQuantity(1);
+                    orderItem.setQuantity(quantity);
                     orderItems.add(orderItem);
                 }
                 cart.setOrderItems(orderItems);
                 session.setAttribute("cart", cart);
+                CartServlet.phoneToCartCookie(req, resp, phone.getId(), quantity);
             }
+
         }
+
         req.getRequestDispatcher(url).forward(req,resp);
 
     }

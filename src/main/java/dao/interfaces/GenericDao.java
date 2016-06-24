@@ -1,16 +1,17 @@
 package dao.interfaces;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
 
 public interface GenericDao<T> {
 
-    void create(T entity);
+    void create(T entity, EntityManager em);
 
-    T merge(T entity);
+    void merge(T entity, EntityManager em);
 
-    void remove(T entity);
+    void remove(T entity, EntityManager em);
 
     List<T> findAll();
 
@@ -18,4 +19,5 @@ public interface GenericDao<T> {
 
     T findOne(Query query);
 
+    List<T> findMany(Query query);
 }

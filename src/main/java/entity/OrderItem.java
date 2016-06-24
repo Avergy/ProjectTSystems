@@ -5,13 +5,14 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "orderitems")
+@NamedQuery(name = "OrderItem.getAll", query = "SELECT b FROM OrderItem b")
 public class OrderItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idOrder", nullable = false)
     private Order order;
 

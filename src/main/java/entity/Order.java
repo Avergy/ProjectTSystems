@@ -9,6 +9,8 @@ import enums.StatusPayment;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
@@ -18,11 +20,11 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "idUser")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "idAddress", nullable = false)
     private UserAddress userAddress;
 
@@ -40,7 +42,7 @@ public class Order implements Serializable {
 
    @Column(name = "StatusOrder", nullable = false)
    @Enumerated(EnumType.STRING)
-    private StatusOrder statusDelivery;
+    private StatusOrder statusOrder;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "Date", nullable = false)
@@ -48,6 +50,32 @@ public class Order implements Serializable {
 
     @Column(name = "Cost", nullable = false)
     private long cost;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems;
+
+    public Order() {
+    }
+
+    public Order(User user, UserAddress userAddress, Payment payment, Delivery delivery, StatusPayment statusPayment, StatusOrder statusOrder, Date date, long cost, List<OrderItem> orderItems) {
+        this.user = user;
+        this.userAddress = userAddress;
+        this.payment = payment;
+        this.delivery = delivery;
+        this.statusPayment = statusPayment;
+        this.statusOrder = statusOrder;
+        this.date = date;
+        this.cost = cost;
+        this.orderItems = orderItems;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
 
     public long getId() {
         return id;
@@ -97,12 +125,12 @@ public class Order implements Serializable {
         this.statusPayment = statusPayment;
     }
 
-    public StatusOrder getStatusDelivery() {
-        return statusDelivery;
+    public StatusOrder getStatusOrder() {
+        return statusOrder;
     }
 
-    public void setStatusDelivery(StatusOrder statusDelivery) {
-        this.statusDelivery = statusDelivery;
+    public void setStatusOrder(StatusOrder statusOrder) {
+        this.statusOrder = statusOrder;
     }
 
     public Date getDate() {
@@ -135,7 +163,7 @@ public class Order implements Serializable {
         if (payment != order.payment) return false;
         if (delivery != order.delivery) return false;
         if (statusPayment != order.statusPayment) return false;
-        if (statusDelivery != order.statusDelivery) return false;
+        if (statusOrder != order.statusOrder) return false;
         return date != null ? date.equals(order.date) : order.date == null;
 
     }
@@ -148,7 +176,7 @@ public class Order implements Serializable {
         result = 31 * result + (payment != null ? payment.hashCode() : 0);
         result = 31 * result + (delivery != null ? delivery.hashCode() : 0);
         result = 31 * result + (statusPayment != null ? statusPayment.hashCode() : 0);
-        result = 31 * result + (statusDelivery != null ? statusDelivery.hashCode() : 0);
+        result = 31 * result + (statusOrder != null ? statusOrder.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (int) (cost ^ (cost >>> 32));
         return result;
@@ -163,7 +191,7 @@ public class Order implements Serializable {
                 ", payment=" + payment +
                 ", delivery=" + delivery +
                 ", statusPayment=" + statusPayment +
-                ", statusDelivery=" + statusDelivery +
+                ", statusOrder=" + statusOrder +
                 ", date=" + date +
                 ", cost=" + cost +
                 '}';

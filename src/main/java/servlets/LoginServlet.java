@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext context = getServletContext();
         HttpSession session = req.getSession();
-        if (req.getParameter("log_in")!=null){
+       /* if (req.getParameter("log_in")!=null){
             UserService userService = new UserServiceImpl();
             User user = userService.checkLoginForm(req.getParameter("j_username"), req.getParameter("j_password"));
             if ( user != null) {
@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
                 resp.sendRedirect("login.jsp");
         } else if (req.getParameter("registration")!=null) {
             resp.sendRedirect("/registration");
-        }
+        }*/
     }
 
 

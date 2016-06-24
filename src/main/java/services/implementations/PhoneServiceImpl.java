@@ -1,40 +1,64 @@
 package services.implementations;
 
-import dao.implementations.PhoneDaoImpl;
+import Util.DAOsUtil;
+import Util.EntityManagerUtil;
 import dao.interfaces.PhoneDao;
 import entity.Brand;
 import entity.Phone;
+import exceptions.DuplicateDBException;
 import services.interfaces.PhoneService;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import java.util.List;
 
 public class PhoneServiceImpl implements PhoneService {
 
-    private PhoneDao phoneDao = new PhoneDaoImpl();
+    private PhoneDao phoneDao = DAOsUtil.getPhoneDao();
 
-    public PhoneDao getPhoneDao() {
-        return phoneDao;
-    }
-
-    public void setPhoneDao(PhoneDao phoneDao) {
-        this.phoneDao = phoneDao;
-    }
-
-    public void addNewPhone(Phone phone) {
-        phoneDao.create(phone);
+    public void addNewPhone(Phone phone) throws DuplicateDBException {
+        EntityManager entityManager = null;
+        try{
+            entityManager = EntityManagerUtil.beginTransaction();
+            phoneDao.create(phone, entityManager);
+            EntityManagerUtil.commitTransaction(entityManager);
+        } catch (PersistenceException e)
+        {
+            e.printStackTrace();
+            EntityManagerUtil.rollbackTransaction(entityManager);
+            throw new DuplicateDBException();
+        }
     }
 
     public Phone loadPhone(long id) {
         return (Phone) phoneDao.findById(id);
     }
 
-    public void updatePhone(Phone phone) {
-        phoneDao.merge(phone);
+    public void updatePhone(Phone phone) throws DuplicateDBException {
+        EntityManager entityManager = null;
+        try{
+            entityManager = EntityManagerUtil.beginTransaction();
+            phoneDao.merge(phone, entityManager);
+            EntityManagerUtil.commitTransaction(entityManager);
+        } catch (PersistenceException e)
+        {
+            e.printStackTrace();
+            EntityManagerUtil.rollbackTransaction(entityManager);
+            throw new DuplicateDBException();
+        }
     }
 
-    public void deletePhone(long id) {
-        Phone phone = (Phone) phoneDao.findById(id);
-        phoneDao.remove(phone);
+    public void deletePhone(Phone phone) {
+        EntityManager entityManager = null;
+        try{
+            entityManager = EntityManagerUtil.beginTransaction();
+            phoneDao.remove(phone, entityManager);
+            EntityManagerUtil.commitTransaction(entityManager);
+        } catch (PersistenceException e)
+        {
+            e.printStackTrace();
+            EntityManagerUtil.rollbackTransaction(entityManager);
+        }
     }
 
     public List<Phone> loadAllPhones() {
@@ -45,4 +69,10 @@ public class PhoneServiceImpl implements PhoneService {
     public List<Phone> loadPhonesByBrand(Brand brand) {
         return phoneDao.findByBrand(brand);
     }
+
+    @Override
+    public Phone findPhoneById(long id) {
+        return (Phone) phoneDao.findById(id);
+    }
+
 }

@@ -4,8 +4,8 @@
 
 
 <div id="indexRightColumn">
-<form action="/login" method="post">
-    <div class="form_box">
+<form class="login_form"  name="user" action="j_security_check" method="POST" id="login_form">
+    <div class="form_box" >
 
         <label for="login">Login:</label>
         <input type="text" name="j_username" id="login" />
@@ -13,7 +13,6 @@
         <input type="password" name="j_password" id="password" />
 
         <input type="submit" name="log_in" value="Log in" class="btn" />
-        <input type="submit" name="registration" value="Register" class="btn" />
 
     </div>
 </form>

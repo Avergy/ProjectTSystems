@@ -1,13 +1,12 @@
 package servlets;
 
+import Util.ServicesUtil;
 import entity.Brand;
 import entity.Phone;
 import entity.User;
 import services.implementations.*;
 import services.interfaces.BrandService;
-import services.interfaces.OrderService;
 import services.interfaces.PhoneService;
-import services.interfaces.UserAddressService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -64,22 +63,23 @@ public class ControllerServlet extends HttpServlet {
         }
 
         else if (userPath.equals("/ordersList")) {
-            OrderService orderService = new OrderServiceImpl();
             String userId = req.getQueryString();
-            if (userId.equals("all"))
-                req.setAttribute(keyOrdersList, orderService.getAllOrders());
-            else {
+            if (userId.equals("all") && user.getRole().getRole().equals("Admin")) {
+                url = "/admin/orderList.jsp";
+                req.setAttribute(keyOrdersList, ServicesUtil.getOrderService().getAllOrders());
+            } else {
+                url = "/user/" + userPath +".jsp";
                 if (user != null)
-                    req.setAttribute(keyOrdersList, orderService.getUserOrders(user));
+                    req.setAttribute(keyOrdersList, user.getOrders());
 
             }
         }
 
         else if (userPath.equals("/myAddressList"))
         {
-            UserAddressService addressService = new UserAddressServiceImpl();
+            url = "/user/" + userPath +".jsp";
             if (user != null)
-                req.setAttribute("myAddressList", addressService.getAllUserAddress(user));
+                req.setAttribute("myAddressList", user.getAddresses());
         }
 
         req.getRequestDispatcher(url).forward(req,resp);

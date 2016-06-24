@@ -1,0 +1,58 @@
+<%@ page import="enums.Delivery" %>
+<%@ page import="enums.Payment" %>
+<%@ page import="entity.UserAddress" %>
+<%@ page import="java.util.List" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
+<form action="/createOrder" method="post">
+<div id="order_setting" >
+
+    Payment type <select name="payment_type">
+    <%
+        for(Payment val: Payment.values())
+        {
+    %>
+    <option><%=val.toString()%></option>
+    <%
+        }
+    %>
+</select>
+
+    Shipping type <select name="shipping_type" onchange="showAddresses(this)">
+    <%
+        for(Delivery val: Delivery.values())
+        {
+    %>
+    <option><%=val.toString()%></option>
+    <%
+        }
+    %>
+</select>
+    <div id="user_addresses">
+        Select a shipping address
+        <%
+            List<UserAddress> addresses = user.getAddresses();
+            if ( addresses.isEmpty())
+            {
+        %>
+        <input type="text" id="address">
+        <% } else { %>
+        <select name="shipping_address">
+            <%
+                for(Delivery val: Delivery.values())
+                {
+            %>
+            <option><%=val.toString()%></option>
+            <%
+                }
+            %>
+        </select>
+        <%
+            }
+        %>
+    </div>
+<input type="submit" name="submit_purchase" value="submit purchase" class="cart_button">
+
+</div>
+</form>

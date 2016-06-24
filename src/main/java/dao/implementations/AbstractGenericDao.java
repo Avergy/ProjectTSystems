@@ -1,7 +1,9 @@
 package dao.implementations;
 
 
+import Util.EntityManagerUtil;
 import dao.interfaces.GenericDao;
+import org.apache.log4j.Logger;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,10 +12,7 @@ import java.util.List;
 public abstract class AbstractGenericDao<T> implements GenericDao<T> {
 
     private Class entityClass;
-    private static EntityManagerFactory entityManagerFactory;
-
-
-    protected EntityManager entityManager = getEntityManagerFactory().createEntityManager();
+    final static Logger logger = Logger.getLogger(AbstractGenericDao.class.getName());
 
     public AbstractGenericDao(){
     }
@@ -22,53 +21,59 @@ public abstract class AbstractGenericDao<T> implements GenericDao<T> {
         this.entityClass = entityClass;
     }
 
-    public static EntityManagerFactory getEntityManagerFactory() {
-        if (entityManagerFactory == null)
-            entityManagerFactory = Persistence.createEntityManagerFactory("ProjectJS");
-        return entityManagerFactory;
+    public void create(T entity, EntityManager entityManager) {
+        logger.info("Saving entity...");
+        entityManager.persist(entity);
+        logger.info("Entity has been saved.");
     }
 
-    public void create(T entity) {
-        entityManager.getTransaction().begin();
+    public void merge(T entity, EntityManager entityManager) {
+        logger.info("Merging entity...");
         entityManager.merge(entity);
-        entityManager.getTransaction().commit();
+        logger.info("Entity has been merged.");
     }
 
-    public T merge(T entity) {
-        entityManager.getTransaction().begin();
-        T newT = entityManager.merge(entity);
-        entityManager.getTransaction().commit();
-        return newT;
-    }
-
-    public void remove(T entity) {
-        entityManager.getTransaction().begin();
-        entityManager.remove(entity);
-        entityManager.getTransaction().commit();
+    public void remove(T entity, EntityManager entityManager) {
+        logger.info("Deleting entity...");
+        entityManager.remove(entityManager.contains(entity) ? entity :entityManager.merge(entity));
+        logger.info("Entity has been deleted.");
     }
 
 
     public List<T> findAll() {
+        logger.info("Searching all of entities...");
         List list = null;
-        entityManager.getTransaction().begin();
+        EntityManager entityManager = EntityManagerUtil.getEntityManager();
         Query query = entityManager.createQuery("from " + entityClass.getName());
         list = query.getResultList();
-        entityManager.getTransaction().commit();
+        entityManager.close();
+        logger.info("Returning List of entities.");
         return list;
     }
 
     public T findById(long id) {
-        entityManager.getTransaction().begin();
+        logger.info("Searching one of entities by id...");
+        EntityManager entityManager = EntityManagerUtil.getEntityManager();
         T newT = (T) entityManager.find(entityClass, id);
-        entityManager.getTransaction().commit();
+        entityManager.close();
+        logger.info("Returning found entity.");
         return newT;
     }
 
     public T findOne(Query query) {
+        logger.info("Searching one of entities...");
         T t;
-        entityManager.getTransaction().begin();
         t = (T) query.getSingleResult();
-        entityManager.getTransaction().commit();
+        logger.info("Returning found entity.");
         return t;
+    }
+
+    @Override
+    public List<T> findMany(Query query) {
+        logger.info("Searching some entities...");
+        List<T> list;
+        list = (List<T>) query.getResultList();
+        logger.info("Returning List of entities.");
+        return list;
     }
 }
